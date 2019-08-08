@@ -8,7 +8,7 @@
 // import { Mock, It, Times } from 'typemoq';
 // import { JournalNotFoundError } from '../../domain/errors/journal-not-found-error';
 
-// describe('getJournal handler', () => {
+describe('getUser handler', () => {
 //   const fakeJournal: ExaminerWorkSchedule = {
 //     examiner: {
 //       staffNumber: '123',
@@ -236,4 +236,4 @@
 //       moqFindJournal.verify(x => x(It.isValue('12345678'), It.isValue(null)), Times.once());
 //     });
 //   });
-// });
+});
