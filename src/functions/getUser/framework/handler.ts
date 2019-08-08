@@ -1,10 +1,11 @@
-// import { APIGatewayProxyEvent, Context, APIGatewayEventRequestContext } from 'aws-lambda';
-// import createResponse from '../../../common/application/utils/createResponse';
+import { APIGatewayProxyEvent, Context, APIGatewayEventRequestContext } from 'aws-lambda';
+import createResponse from '../../../common/application/utils/createResponse';
 // import { HttpStatus } from '../../../common/application/api/HttpStatus';
 // import * as logger from '../../../common/application/utils/logger';
 // import { findJournal } from '../application/service/FindJournal';
 
-// export async function handler(event: APIGatewayProxyEvent, fnCtx: Context) {
+export async function handler(event: APIGatewayProxyEvent, fnCtx: Context) {
+  return createResponse({});
 //   const staffNumber = getStaffNumber(event.pathParameters);
 //   if (staffNumber === null) {
 //     return createResponse('No staffNumber provided', HttpStatus.BAD_REQUEST);
@@ -58,7 +59,7 @@
 //     }
 //   }
 //   return null;
-// };
+}
 
 // const getEmployeeIdFromRequestContext = (requestContext: APIGatewayEventRequestContext): string | null => {
 //   if (requestContext.authorizer && typeof requestContext.authorizer.staffNumber === 'string') {
