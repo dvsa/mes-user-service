@@ -8,6 +8,6 @@ export const userRecordFixture: UserRecord = {
       from: 'yesterday',
       testCategory: 'B',
       to: true,
-    }
-  ]
-}
+    },
+  ],
+};

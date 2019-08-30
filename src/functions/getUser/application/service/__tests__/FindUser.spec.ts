@@ -5,7 +5,6 @@ import { userRecordFixture } from './FindUser.spec.data';
 import { findUser } from '../FindUser';
 import * as DynamoUserRepository from '../../../framework/aws/DynamoUserRepository';
 
-
 const dummyWorkSchedule = Mock.ofType<ExaminerWorkSchedule>();
 dummyWorkSchedule.setup((x: any) => x.staffNumber).returns(() => '00000000');
 dummyWorkSchedule.setup((x: any) => x.then).returns(() => null);
