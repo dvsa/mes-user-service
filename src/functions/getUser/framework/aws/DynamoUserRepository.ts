@@ -1,36 +1,36 @@
-// import { DynamoDB } from 'aws-sdk';
-// import * as logger from '../../../../common/application/utils/logger';
-// import { JournalRecord } from '../../domain/JournalRecord';
+import { DynamoDB } from 'aws-sdk';
+import * as logger from '../../../../common/application/utils/logger';
+import { UserRecord } from '../../domain/UserRecord';
 
-// const createDynamoClient = () => {
-//   return process.env.IS_OFFLINE
-//     ? new DynamoDB.DocumentClient({ endpoint: 'http://localhost:8000' })
-//     : new DynamoDB.DocumentClient();
-// };
+const createDynamoClient = () => {
+  return process.env.IS_OFFLINE
+    ? new DynamoDB.DocumentClient({ endpoint: 'http://localhost:8000' })
+    : new DynamoDB.DocumentClient();
+};
 
-// const ddb = createDynamoClient();
-// const tableName = getJournalTableName();
+const ddb = createDynamoClient();
+const tableName = getUserTableName();
 
-// export async function getJournal(staffNumber: string): Promise<JournalRecord | null> {
-//   const journalGetResult = await ddb.get({
-//     TableName: tableName,
-//     Key: {
-//       staffNumber,
-//     },
-//   }).promise();
+export async function getUserRecord(staffNumber: string): Promise<UserRecord | null> {
+  const getUserResult = await ddb.get({
+    TableName: tableName,
+    Key: {
+      staffNumber,
+    },
+  }).promise();
 
-//   if (journalGetResult.Item === undefined) {
-//     return null;
-//   }
+  if (getUserResult.Item === undefined) {
+    return null;
+  }
 
-//   return journalGetResult.Item as JournalRecord;
-// }
+  return getUserResult.Item as UserRecord;
+}
 
-// function getJournalTableName(): string {
-//   let tableName = process.env.JOURNALS_DDB_TABLE_NAME;
-//   if (tableName === undefined || tableName.length === 0) {
-//     logger.warn('No journal table name set, using the default');
-//     tableName = 'journal';
-//   }
-//   return tableName;
-// }
+function getUserTableName(): string {
+  let tableName = process.env.USERS_DDB_TABLE_NAME;
+  if (tableName === undefined || tableName.length === 0) {
+    logger.warn('No user table name set, using the default');
+    tableName = 'users';
+  }
+  return tableName;
+}
