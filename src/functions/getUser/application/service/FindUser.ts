@@ -12,7 +12,6 @@ export async function findUser(
   staffNumber: string,
 ): Promise<UserRecord> {
   const userRecord = await getUserRecord(staffNumber);
-  console.log(userRecord);
   if (!userRecord) {
     throw new UserNotFoundError();
   }
