@@ -1,4 +1,3 @@
-import { ExaminerWorkSchedule } from '@dvsa/mes-journal-schema/Journal';
 import { handler } from '../handler';
 const lambdaTestUtils = require('aws-lambda-test-utils');
 import * as createResponse from '../../../../common/application/utils/createResponse';
