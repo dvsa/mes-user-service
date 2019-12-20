@@ -1,5 +1,5 @@
 import { Mock, It, Times } from 'typemoq';
-import { ExaminerWorkSchedule } from '@dvsa/mes-journal-schema/Journal';
+import { ExaminerWorkSchedule } from '@dvsa/mes-journal-schema';
 import { UserNotFoundError } from '../../../domain/user-not-found-error';
 import { userRecordFixture } from './FindUser.spec.data';
 import { findUser } from '../FindUser';
