@@ -23,7 +23,7 @@
     "test:int": "npm run compile && jasmine build/spec/journal.spec.js"
   },
   "dependencies": {
-    "aws-sdk": "^2.389.0"
+    "aws-sdk": "^2.900.0"
   },
   "devDependencies": {
     "@dvsa/mes-journal-schema": "^1.0.7",
