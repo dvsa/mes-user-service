@@ -1,4 +1,4 @@
-import { APIGatewayProxyEvent, Context, APIGatewayEventRequestContext } from 'aws-lambda';
+import { APIGatewayProxyEvent, APIGatewayProxyEventPathParameters, Context } from 'aws-lambda';
 import createResponse from '../../../common/application/utils/createResponse';
 import { HttpStatus } from '../../../common/application/api/HttpStatus';
 import * as logger from '../../../common/application/utils/logger';
@@ -24,7 +24,7 @@ export async function handler(event: APIGatewayProxyEvent, fnCtx: Context) {
   }
 }
 
-function getStaffNumber(pathParams: { [key: string]: string } | null): string | null {
+function getStaffNumber(pathParams: APIGatewayProxyEventPathParameters | null): string | null {
   if (pathParams === null
     || typeof pathParams.staffNumber !== 'string'
     || pathParams.staffNumber.trim().length === 0) {
