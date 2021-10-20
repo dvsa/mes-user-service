@@ -19,7 +19,7 @@ export async function handler(event: APIGatewayProxyEvent, fnCtx: Context) {
     if (err instanceof UserNotFoundError) {
       return createResponse({}, HttpStatus.NOT_FOUND);
     }
-    logger.error(err);
+    logger.error(err as string);
     return createResponse('Internal server error', HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }
