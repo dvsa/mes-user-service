@@ -2,7 +2,7 @@ service: mes-user-service
 
 provider:
   name: aws
-  runtime: nodejs8.10
+  runtime: nodejs14
   environment:
     USERS_DDB_TABLE_NAME: users
 
