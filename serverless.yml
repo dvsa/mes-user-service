@@ -19,6 +19,9 @@ functions:
 
 custom:
   dynamodb:
+    stages:
+      - test
+      - dev
     start:
       port: 8000
       inMemory: true
@@ -34,10 +37,10 @@ custom:
 
 resources:
   Resources:
-    penaltyDocuments:
+    users:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: ${self:provider.environment.JOURNALS_DDB_TABLE_NAME}
+        TableName: ${self:provider.environment.USERS_DDB_TABLE_NAME}
         AttributeDefinitions:
           - AttributeName: staffNumber
             AttributeType: S
