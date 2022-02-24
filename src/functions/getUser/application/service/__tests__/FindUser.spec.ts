@@ -1,5 +1,5 @@
-import { Mock, It, Times } from 'typemoq';
-import { ExaminerWorkSchedule } from '@dvsa/mes-journal-schema/Journal';
+import { Mock } from 'typemoq';
+import { ExaminerWorkSchedule } from '@dvsa/mes-journal-schema';
 import { UserNotFoundError } from '../../../domain/user-not-found-error';
 import { userRecordFixture } from './FindUser.spec.data';
 import { findUser } from '../FindUser';
@@ -13,7 +13,7 @@ describe('FindUser', () => {
 
   describe('findUser', () => {
     it('should throw UserNotFoundError when the repo cant get the user', async () => {
-      spyOn(DynamoUserRepository, 'getUserRecord').and.returnValue(null);
+      spyOn(DynamoUserRepository, 'getUserRecord').and.returnValue(Promise.resolve(null));
 
       try {
         await findUser('00000000');
@@ -26,7 +26,7 @@ describe('FindUser', () => {
 
     it('should return the user record', async () => {
       spyOn(DynamoUserRepository, 'getUserRecord')
-        .and.returnValue(userRecordFixture);
+        .and.returnValue(Promise.resolve(userRecordFixture));
 
       const result = await findUser('00000000');
       expect(result).toBe(userRecordFixture);

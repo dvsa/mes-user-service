@@ -1,10 +1,9 @@
-import { ExaminerWorkSchedule } from '@dvsa/mes-journal-schema/Journal';
 import { handler } from '../handler';
 const lambdaTestUtils = require('aws-lambda-test-utils');
 import * as createResponse from '../../../../common/application/utils/createResponse';
 import { APIGatewayEvent, Context } from 'aws-lambda';
 import * as FindUser from '../../application/service/FindUser';
-import { Mock, It, Times } from 'typemoq';
+import { Mock, It } from 'typemoq';
 import { userRecordFixture } from '../../application/service/__tests__/FindUser.spec.data';
 import { UserNotFoundError } from '../../domain/user-not-found-error';
 
