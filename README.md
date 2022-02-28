@@ -45,3 +45,14 @@ To run the unit tests, simply run:
 ```shell
 npm test
 ```
+
+## Offline Testing
+
+To spin up a local database to allow for local testing, run the following command:
+
+```shell
+npm run start
+```
+This will populate a local database populated from test-data/dynamo-seed-users.json and 
+can be accessed via http://localhost:3000/dev/users/1234567 
+This will require you to have appropreate credentials for aws set in ~/.aws/credentials
