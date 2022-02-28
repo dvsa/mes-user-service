@@ -19,4 +19,5 @@ artefacts
 .dynamodb/
 .serverless/
 .nyc_output/
+.env
 tslint-to-eslint-config.log
