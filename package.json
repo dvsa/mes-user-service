@@ -23,9 +23,6 @@
     "test:int": "npm run compile && jasmine build/spec/journal.spec.js",
     "prepare": "husky install"
   },
-  "dependencies": {
-    "aws-sdk": "^2.1224.0"
-  },
   "devDependencies": {
     "@dvsa/mes-journal-schema": "^1.2.2",
     "@types/aws-lambda": "^8.10.106",
