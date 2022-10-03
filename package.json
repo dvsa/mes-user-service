@@ -27,7 +27,7 @@
     "aws-sdk": "^2.1224.0"
   },
   "devDependencies": {
-    "@dvsa/mes-journal-schema": "^1.2.1",
+    "@dvsa/mes-journal-schema": "^1.2.2",
     "@types/aws-lambda": "^8.10.106",
     "@types/jasmine": "^4.3.0",
     "@types/node": "^16.10.2",
