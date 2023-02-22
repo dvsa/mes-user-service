@@ -1,9 +1,8 @@
 import { APIGatewayProxyEvent, APIGatewayProxyEventPathParameters, Context } from 'aws-lambda';
+import { customMetric, error, warn } from '@dvsa/mes-microservice-common/application/utils/logger';
 import createResponse from '../../../common/application/utils/createResponse';
 import { HttpStatus } from '../../../common/application/api/HttpStatus';
-import * as logger from '../../../common/application/utils/logger';
 import { findUser } from '../application/service/FindUser';
-import { UserRecord } from '../domain/UserRecord';
 import { UserNotFoundError } from '../domain/user-not-found-error';
 
 export async function handler(event: APIGatewayProxyEvent, fnCtx: Context) {
@@ -13,13 +12,15 @@ export async function handler(event: APIGatewayProxyEvent, fnCtx: Context) {
   }
 
   try {
-    const userRecord: UserRecord = await findUser(staffNumber);
+    await findUser(staffNumber);
+    customMetric('UserFound', 'User found in DynamoDB table using staff number provided');
     return createResponse({});
   } catch (err) {
     if (err instanceof UserNotFoundError) {
+      customMetric('UserNotFound', 'User not found in DynamoDB table using staff number provided');
       return createResponse({}, HttpStatus.NOT_FOUND);
     }
-    logger.error(err as string);
+    error(err as string);
     return createResponse('Internal server error', HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }
@@ -28,7 +29,7 @@ function getStaffNumber(pathParams: APIGatewayProxyEventPathParameters | null): 
   if (pathParams === null
     || typeof pathParams.staffNumber !== 'string'
     || pathParams.staffNumber.trim().length === 0) {
-    logger.warn('No staffNumber path parameter found');
+    warn('No staffNumber path parameter found');
     return null;
   }
   return pathParams.staffNumber;
