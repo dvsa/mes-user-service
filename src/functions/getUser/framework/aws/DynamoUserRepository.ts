@@ -1,5 +1,5 @@
 import { DynamoDB } from 'aws-sdk';
-import * as logger from '../../../../common/application/utils/logger';
+import { warn } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { UserRecord } from '../../domain/UserRecord';
 
 const createDynamoClient = () => {
@@ -29,7 +29,7 @@ export async function getUserRecord(staffNumber: string): Promise<UserRecord | n
 function getUserTableName(): string {
   let tableName = process.env.USERS_DDB_TABLE_NAME;
   if (tableName === undefined || tableName.length === 0) {
-    logger.warn('No user table name set, using the default');
+    warn('No user table name set, using the default');
     tableName = 'users';
   }
   return tableName;
