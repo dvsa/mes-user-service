@@ -1,0 +1,8 @@
+/.dynamodb/
+/.husky/
+/.idea/
+/build/
+/node_modules/
+/spec/
+/test-data/
+/typings/

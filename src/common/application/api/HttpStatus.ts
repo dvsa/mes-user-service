@@ -1,4 +1,4 @@
-export enum HttpStatus {
+enum HttpStatus {
   NOT_MODIFIED = 304,
   BAD_REQUEST = 400,
   UNAUTHORIZED = 401,
@@ -7,3 +7,5 @@ export enum HttpStatus {
   INTERNAL_SERVER_ERROR = 500,
   BAD_GATEWAY = 502,
 }
+
+export default HttpStatus;

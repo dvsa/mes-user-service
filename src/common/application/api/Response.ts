@@ -1,5 +1,5 @@
 export default interface Response {
-  body: any;
+  body: unknown;
   statusCode: number;
   headers: { [id: string]: string };
 }

@@ -3,30 +3,34 @@
   "version": "0.1.0",
   "author": "DVSA",
   "license": "MIT",
-  "description": "A suite of Lambda functions for CRUD of driving test examiner entries",
+  "description": "A serverless microservice responsible for retrieving user details for driving examiners",
   "homepage": "https://github.com/dvsa/mes-user-service#README.md",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dvsa/mes-user-service.git"
   },
+  "bugs": {
+    "url": "https://github.com/dvsa/mes-user-service/issues"
+  },
   "scripts": {
     "clean": "rimraf build artefacts",
     "compile": "tsc",
     "compile-no-emit": "tsc --noEmit -p .",
-    "lint": "eslint -c .eslintrc.js --ext .ts src",
-    "lint:fix": "eslint --fix -c .eslintrc.js --ext .ts src",
+    "lint": "eslint -c .eslintrc.json --ext .ts src",
+    "lint:fix": "eslint --fix -c .eslintrc.json --ext .ts src",
     "package": "./package.sh",
+    "prepare": "husky install",
     "security-scan": "git secrets --scan && git log -p | scanrepo",
     "start": "sls dynamodb install && sls offline start",
     "test": "npm run compile && jasmine",
-    "test:jasmine-coverage": "nyc npm run test",
-    "test:int": "npm run compile && jasmine build/spec/journal.spec.js",
-    "prepare": "husky install"
+    "test:jasmine-coverage": "nyc npm run test"
   },
   "dependencies": {
-    "@dvsa/mes-microservice-common": "0.8.3"
+    "@dvsa/mes-microservice-common": "0.8.3",
+    "aws-sdk": "^2.1333.0"
   },
   "devDependencies": {
+    "@dvsa/eslint-config-des": "0.0.1",
     "@dvsa/mes-journal-schema": "^1.2.2",
     "@types/aws-lambda": "^8.10.106",
     "@types/jasmine": "^4.3.0",
@@ -40,6 +44,7 @@
     "husky": "^8.0.1",
     "jasmine": "^4.4.0",
     "jasmine-spec-reporter": "^7.0.0",
+    "lint-staged": "^13.2.0",
     "node.extend": "^2.0.2",
     "npm-run-all": "^4.1.5",
     "nyc": "^15.1.0",
@@ -76,7 +81,9 @@
     "produce-source-map": true,
     "instrument": true
   },
-  "bugs": {
-    "url": "https://github.com/dvsa/mes-journal-service/issues"
+  "lint-staged": {
+    "./src/**/*.ts": [
+      "npm run lint:fix"
+    ]
   }
 }

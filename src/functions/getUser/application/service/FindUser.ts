@@ -1,6 +1,6 @@
-import { getUserRecord } from '../../framework/aws/DynamoUserRepository';
+import getUserRecord from '../../framework/aws/DynamoUserRepository';
 import { UserRecord } from '../../domain/UserRecord';
-import { UserNotFoundError } from '../../domain/user-not-found-error';
+import UserNotFoundError from '../../domain/user-not-found-error';
 
 /**
  * Finds a journal with a specified staffNumber.
@@ -8,7 +8,7 @@ import { UserNotFoundError } from '../../domain/user-not-found-error';
  * Throws a JournalDecompressionError if decompression fails
  * @param staffNumber the staff number of the journal to find
  */
-export async function findUser(
+async function findUser(
   staffNumber: string,
 ): Promise<UserRecord> {
   const userRecord = await getUserRecord(staffNumber);
@@ -18,3 +18,5 @@ export async function findUser(
 
   return userRecord;
 }
+
+export default findUser;

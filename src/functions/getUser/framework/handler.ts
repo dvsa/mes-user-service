@@ -1,12 +1,16 @@
-import { APIGatewayProxyEvent, APIGatewayProxyEventPathParameters, Context } from 'aws-lambda';
-import { bootstrapLogging, customMetric, error, warn } from '@dvsa/mes-microservice-common/application/utils/logger';
+import { APIGatewayProxyEvent } from 'aws-lambda';
+import {
+  bootstrapLogging, customMetric, error,
+} from '@dvsa/mes-microservice-common/application/utils/logger';
 import createResponse from '../../../common/application/utils/createResponse';
-import { HttpStatus } from '../../../common/application/api/HttpStatus';
-import { findUser } from '../application/service/FindUser';
-import { UserNotFoundError } from '../domain/user-not-found-error';
-import { Metric } from '../../../common/application/metric/metric';
+import HttpStatus from '../../../common/application/api/HttpStatus';
+import getStaffNumber from '../application/validation/get-staff-number';
+import findUser from '../application/service/FindUser';
+import UserNotFoundError from '../domain/user-not-found-error';
+import Metric from '../../../common/application/metric/metric';
+import Response from '../../../common/application/api/Response';
 
-export async function handler(event: APIGatewayProxyEvent, fnCtx: Context) {
+async function handler(event: APIGatewayProxyEvent): Promise<Response> {
   bootstrapLogging('user-service', event);
 
   const staffNumber = getStaffNumber(event.pathParameters);
@@ -28,12 +32,4 @@ export async function handler(event: APIGatewayProxyEvent, fnCtx: Context) {
   }
 }
 
-function getStaffNumber(pathParams: APIGatewayProxyEventPathParameters | null): string | null {
-  if (pathParams === null
-    || typeof pathParams.staffNumber !== 'string'
-    || pathParams.staffNumber.trim().length === 0) {
-    warn('No staffNumber path parameter found');
-    return null;
-  }
-  return pathParams.staffNumber;
-}
+export default handler;

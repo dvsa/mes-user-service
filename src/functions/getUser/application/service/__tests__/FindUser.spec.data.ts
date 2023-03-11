@@ -1,6 +1,6 @@
 import { UserRecord } from '../../../domain/UserRecord';
 
-export const userRecordFixture: UserRecord = {
+const userRecordFixture: UserRecord = {
   role: 'DE',
   staffNumber: '123456',
   testPermissionPeriods: [
@@ -11,3 +11,5 @@ export const userRecordFixture: UserRecord = {
     },
   ],
 };
+
+export default userRecordFixture;
