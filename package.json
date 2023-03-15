@@ -12,7 +12,6 @@
   "bugs": {
     "url": "https://github.com/dvsa/mes-user-service/issues"
   },
-  "// test2": "echo hello",
   "scripts": {
     "clean": "rimraf build artefacts",
     "compile": "tsc",
