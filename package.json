@@ -34,7 +34,7 @@
     "@dvsa/mes-journal-schema": "^1.2.2",
     "@types/aws-lambda": "^8.10.106",
     "@types/jasmine": "^4.3.0",
-    "@types/node": "^16.10.2",
+    "@types/node": "^16.14.0",
     "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^5.38.1",
     "@typescript-eslint/parser": "^5.38.1",
