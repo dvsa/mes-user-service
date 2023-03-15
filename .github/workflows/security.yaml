@@ -5,3 +5,5 @@ on: push
 jobs:
   security:
     uses: dvsa/des-workflow-actions/.github/workflows/security.yaml@main
+    secrets:
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
