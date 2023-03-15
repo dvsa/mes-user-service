@@ -25,6 +25,7 @@
     "test": "npm run compile && jasmine",
     "test:jasmine-coverage": "nyc npm run test"
   },
+  "// test4": "echo hi",
   "dependencies": {
     "@dvsa/mes-microservice-common": "0.8.3",
     "aws-sdk": "^2.1333.0"
