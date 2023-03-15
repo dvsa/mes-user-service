@@ -12,7 +12,7 @@
   "bugs": {
     "url": "https://github.com/dvsa/mes-user-service/issues"
   },
-  "// test": "echo hello",
+  "// test1": "echo hello",
   "scripts": {
     "clean": "rimraf build artefacts",
     "compile": "tsc",
