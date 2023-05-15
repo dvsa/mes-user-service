@@ -1,4 +1,4 @@
-import { APIGatewayProxyEvent, APIGatewayProxyEventPathParameters, Context } from 'aws-lambda';
+import { APIGatewayProxyEvent, APIGatewayProxyEventPathParameters } from 'aws-lambda';
 import { bootstrapLogging, customMetric, error, warn } from '@dvsa/mes-microservice-common/application/utils/logger';
 import createResponse from '../../../common/application/utils/createResponse';
 import { HttpStatus } from '../../../common/application/api/HttpStatus';
@@ -6,17 +6,20 @@ import { findUser } from '../application/service/FindUser';
 import { UserNotFoundError } from '../domain/user-not-found-error';
 import { Metric } from '../../../common/application/metric/metric';
 
-export async function handler(event: APIGatewayProxyEvent, fnCtx: Context) {
-  bootstrapLogging('user-service', event);
-
-  const staffNumber = getStaffNumber(event.pathParameters);
-  if (staffNumber === null) {
-    return createResponse('No staffNumber provided', HttpStatus.BAD_REQUEST);
-  }
-
+export async function handler(event: APIGatewayProxyEvent) {
   try {
+    bootstrapLogging('user-service', event);
+
+    const staffNumber = getStaffNumber(event.pathParameters);
+    if (staffNumber === null) {
+      error('No staffNumber provided');
+      return createResponse('No staffNumber provided', HttpStatus.BAD_REQUEST);
+    }
+
     await findUser(staffNumber);
+
     customMetric(Metric.UserFound, 'User found in DynamoDB table using staff number provided');
+
     return createResponse({});
   } catch (err) {
     if (err instanceof UserNotFoundError) {

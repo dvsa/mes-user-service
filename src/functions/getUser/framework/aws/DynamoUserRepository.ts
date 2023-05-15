@@ -1,29 +1,28 @@
-import { DynamoDB } from 'aws-sdk';
+import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb';
+import { DynamoDB } from '@aws-sdk/client-dynamodb';
 import { warn } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { UserRecord } from '../../domain/UserRecord';
 
 const createDynamoClient = () => {
   return process.env.IS_OFFLINE
-    ? new DynamoDB.DocumentClient({ endpoint: 'http://localhost:8000' })
-    : new DynamoDB.DocumentClient();
+    ? DynamoDBDocument.from(new DynamoDB({ endpoint: 'http://localhost:8000' }))
+    : DynamoDBDocument.from(new DynamoDB({ region: 'eu-west-1' }));
 };
 
 const ddb = createDynamoClient();
 const tableName = getUserTableName();
 
 export async function getUserRecord(staffNumber: string): Promise<UserRecord | null> {
-  const getUserResult = await ddb.get({
+  const response = await ddb.get({
     TableName: tableName,
-    Key: {
-      staffNumber,
-    },
-  }).promise();
+    Key: { staffNumber },
+  });
 
-  if (getUserResult.Item === undefined) {
+  if (response.Item === undefined) {
     return null;
   }
 
-  return getUserResult.Item as UserRecord;
+  return response.Item as UserRecord;
 }
 
 function getUserTableName(): string {
