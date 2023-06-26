@@ -26,7 +26,7 @@ export async function handler(event: APIGatewayProxyEvent) {
       customMetric(Metric.UserNotFound, 'User not found in DynamoDB table using staff number provided');
       return createResponse({}, HttpStatus.NOT_FOUND);
     }
-    error('Unknown error', err);
+    error('Unknown error', (err instanceof Error) ? err.message : err);
     return createResponse('Internal server error', HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }

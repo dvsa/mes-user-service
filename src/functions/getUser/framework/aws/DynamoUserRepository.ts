@@ -1,12 +1,22 @@
 import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb';
-import { DynamoDB } from '@aws-sdk/client-dynamodb';
-import { warn } from '@dvsa/mes-microservice-common/application/utils/logger';
+import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
+import { fromIni } from '@aws-sdk/credential-providers';
+import { DynamoDBClientConfig } from '@aws-sdk/client-dynamodb/dist-types/DynamoDBClient';
+import { error, warn } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { UserRecord } from '../../domain/UserRecord';
 
-const createDynamoClient = () => {
-  return process.env.IS_OFFLINE
-    ? DynamoDBDocument.from(new DynamoDB({ endpoint: 'http://localhost:8000' }))
-    : DynamoDBDocument.from(new DynamoDB({ region: 'eu-west-1' }));
+const createDynamoClient = (): DynamoDBDocument => {
+  const opts = { region: 'eu-west-1' } as DynamoDBClientConfig;
+
+  if (process.env.USE_CREDENTIALS === 'true') {
+    error('Using ~/.aws/credentials');
+    opts.credentials = fromIni();
+  } else if (process.env.USE_SLS === 'true') {
+    error('Using sls offline');
+    opts.endpoint = 'http://localhost:8000';
+  }
+
+  return DynamoDBDocument.from(new DynamoDBClient(opts));
 };
 
 const ddb = createDynamoClient();
