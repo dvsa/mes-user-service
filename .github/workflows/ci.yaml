@@ -8,7 +8,7 @@ on: push
 
 jobs:
   runs-ci:
-    uses: dvsa/des-workflow-actions/.github/workflows/ci-backend.yaml@env-creataion
+    uses: dvsa/des-workflow-actions/.github/workflows/ci-backend.yaml@env-creation
     with:
       dynamodb: true
     secrets:
