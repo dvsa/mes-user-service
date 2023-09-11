@@ -8,8 +8,8 @@ on: push
 
 jobs:
   runs-ci:
-    uses: dvsa/des-workflow-actions/.github/workflows/ci-backend.yaml@dynamodb-syntax
+    uses: dvsa/des-workflow-actions/.github/workflows/ci-backend.yaml@env-creataion
     with:
-      dynamodb: false
+      dynamodb: true
     secrets:
       DES_ACCESS_TOKEN: ${{ secrets.DES_ACCESS_TOKEN }}
