@@ -1,14 +1,14 @@
 name: CI
 
-on: push
-#  pull_request:
-#    branches:
-#      - develop
-#      - 'release-**'
+on:
+  pull_request:
+    branches:
+      - develop
+      - 'release-**'
 
 jobs:
   runs-ci:
-    uses: dvsa/des-workflow-actions/.github/workflows/ci-backend.yaml@env-creation
+    uses: dvsa/des-workflow-actions/.github/workflows/ci-backend.yaml@main
     with:
       dynamodb: true
     secrets:
