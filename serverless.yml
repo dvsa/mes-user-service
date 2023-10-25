@@ -5,6 +5,7 @@ provider:
   runtime: nodejs18.x
   environment:
     USERS_DDB_TABLE_NAME: users
+    DDB_OFFLINE_ENDPOINT: http://localhost:8000
 
 package:
   individually: true
