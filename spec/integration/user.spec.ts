@@ -1,6 +1,10 @@
 describe('Integration test', () => {
   const baseUrl = 'http://localhost:3000/dev/users';
 
+  beforeAll(() => {
+    process.env.IS_OFFLINE = 'true';
+  });
+
   it('should respond 200 for a user that exists', async () => {
     try {
       const response = await fetch(`${baseUrl}/1234567`);
