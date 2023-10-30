@@ -21,7 +21,7 @@ export async function handler(event: APIGatewayProxyEvent) {
 
     customMetric(Metric.UserFound, 'User found in DynamoDB table using staff number provided');
 
-    return createResponse({}, HttpStatus.OK);
+    return createResponse({});
   } catch (err) {
     if (err instanceof UserNotFoundError) {
       customMetric(Metric.UserNotFound, 'User not found in DynamoDB table using staff number provided');
