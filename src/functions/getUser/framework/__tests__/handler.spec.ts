@@ -1,10 +1,9 @@
-import { handler } from '../handler';
 const lambdaTestUtils = require('aws-lambda-test-utils');
-import * as createResponse from '../../../../common/application/utils/createResponse';
+import * as response from '@dvsa/mes-microservice-common/application/api/create-response';
+import { handler } from '../handler';
 import { APIGatewayEvent } from 'aws-lambda';
 import * as FindUser from '../../application/service/FindUser';
 import { Mock, It } from 'typemoq';
-import { userRecordFixture } from '../../application/service/__tests__/FindUser.spec.data';
 import { UserNotFoundError } from '../../domain/user-not-found-error';
 
 describe('getUser handler', () => {
@@ -16,7 +15,7 @@ describe('getUser handler', () => {
   beforeEach(() => {
     moqFindUser.reset();
 
-    createResponseSpy = spyOn(createResponse, 'default');
+    createResponseSpy = spyOn(response, 'createResponse');
     dummyApigwEvent = lambdaTestUtils.mockEventCreator.createAPIGatewayEvent({
       pathParameters: {
         staffNumber: '12345678',
@@ -33,13 +32,13 @@ describe('getUser handler', () => {
 
   describe('given the FindUser returns a journal', () => {
     it('should return a successful response', async () => {
-      moqFindUser.setup(x => x(It.isAny())).returns(() => Promise.resolve(userRecordFixture));
+      moqFindUser.setup(x => x(It.isAny())).returns(() => Promise.resolve());
       createResponseSpy.and.returnValue({ statusCode: 200 });
 
       const resp = await handler(dummyApigwEvent);
 
       expect(resp.statusCode).toBe(200);
-      expect(createResponse.default).toHaveBeenCalledWith({});
+      expect(response.createResponse).toHaveBeenCalledWith({});
     });
   });
 
@@ -51,7 +50,7 @@ describe('getUser handler', () => {
       const resp = await handler(dummyApigwEvent);
 
       expect(resp.statusCode).toBe(404);
-      expect(createResponse.default).toHaveBeenCalledWith({}, 404);
+      expect(response.createResponse).toHaveBeenCalledWith({}, 404);
     });
   });
 
@@ -63,7 +62,7 @@ describe('getUser handler', () => {
       const resp = await handler(dummyApigwEvent);
 
       expect(resp.statusCode).toBe(400);
-      expect(createResponse.default).toHaveBeenCalledWith('No staffNumber provided', 400);
+      expect(response.createResponse).toHaveBeenCalledWith('No staffNumber provided', 400);
     });
   });
 });

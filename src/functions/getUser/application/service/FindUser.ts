@@ -1,5 +1,4 @@
-import { getUserRecord } from '../../framework/aws/DynamoUserRepository';
-import { UserRecord } from '../../domain/UserRecord';
+import { getUserRecord } from '../../framework/aws/dynamo-user-repository';
 import { UserNotFoundError } from '../../domain/user-not-found-error';
 
 /**
@@ -10,11 +9,10 @@ import { UserNotFoundError } from '../../domain/user-not-found-error';
  */
 export async function findUser(
   staffNumber: string,
-): Promise<UserRecord> {
+): Promise<void> {
   const userRecord = await getUserRecord(staffNumber);
+
   if (!userRecord) {
     throw new UserNotFoundError();
   }
-
-  return userRecord;
 }
