@@ -8,14 +8,13 @@ import { UserNotFoundError } from '../../domain/user-not-found-error';
 
 describe('getUser handler', () => {
   let dummyApigwEvent: APIGatewayEvent;
-  let createResponseSpy: jasmine.Spy;
 
   const moqFindUser = Mock.ofInstance(FindUser.findUser);
 
   beforeEach(() => {
     moqFindUser.reset();
 
-    createResponseSpy = spyOn(response, 'createResponse');
+    spyOn(response, 'createResponse').and.callThrough();
     dummyApigwEvent = lambdaTestUtils.mockEventCreator.createAPIGatewayEvent({
       pathParameters: {
         staffNumber: '12345678',
@@ -30,39 +29,55 @@ describe('getUser handler', () => {
     spyOn(FindUser, 'findUser').and.callFake(moqFindUser.object);
   });
 
-  describe('given the FindUser returns a journal', () => {
-    it('should return a successful response', async () => {
-      moqFindUser.setup(x => x(It.isAny())).returns(() => Promise.resolve());
-      createResponseSpy.and.returnValue({ statusCode: 200 });
+  describe('200',  () => {
+    describe('given the FindUser returns a journal', () => {
+      it('should return a successful response', async () => {
+        moqFindUser.setup(x => x(It.isAny())).returns(() => Promise.resolve());
 
-      const resp = await handler(dummyApigwEvent);
+        const resp = await handler(dummyApigwEvent);
 
-      expect(resp.statusCode).toBe(200);
-      expect(response.createResponse).toHaveBeenCalledWith({});
+        expect(resp.statusCode).toBe(200);
+        expect(response.createResponse).toHaveBeenCalledWith({});
+      });
     });
   });
 
-  describe('given FindUser throws a UserNotFound error', () => {
-    it('should return HTTP 404 NOT_FOUND', async () => {
-      moqFindUser.setup(x => x(It.isAny())).throws(new UserNotFoundError());
-      createResponseSpy.and.returnValue({ statusCode: 404 });
+  describe('404', () => {
+    describe('given FindUser throws a UserNotFound error', () => {
+      it('should return HTTP 404 NOT_FOUND', async () => {
+        moqFindUser.setup(x => x(It.isAny())).throws(new UserNotFoundError());
 
-      const resp = await handler(dummyApigwEvent);
+        const resp = await handler(dummyApigwEvent);
 
-      expect(resp.statusCode).toBe(404);
-      expect(response.createResponse).toHaveBeenCalledWith({}, 404);
+        expect(resp.statusCode).toBe(404);
+        expect(response.createResponse).toHaveBeenCalledWith({}, 404);
+      });
     });
   });
 
-  describe('given there is no staffNumber provided', () => {
-    it('should indicate a bad request', async () => {
-      dummyApigwEvent.pathParameters = {};
-      createResponseSpy.and.returnValue({ statusCode: 400 });
+  describe('400', () => {
+    describe('given there is no staffNumber provided', () => {
+      it('should indicate a bad request', async () => {
+        dummyApigwEvent.pathParameters = {};
 
-      const resp = await handler(dummyApigwEvent);
+        const resp = await handler(dummyApigwEvent);
 
-      expect(resp.statusCode).toBe(400);
-      expect(response.createResponse).toHaveBeenCalledWith('No staffNumber provided', 400);
+        expect(resp.statusCode).toBe(400);
+        expect(response.createResponse).toHaveBeenCalledWith('No staffNumber provided', 400);
+      });
+    });
+  });
+
+  describe('500', () => {
+    describe('given an unknown error is thrown', () => {
+      it('should ', async () => {
+        moqFindUser.setup(x => x(It.isAny())).throws(new Error('Some random error'));
+
+        const resp = await handler(dummyApigwEvent);
+
+        expect(resp.statusCode).toBe(500);
+        expect(response.createResponse).toHaveBeenCalledWith('Internal server error', 500);
+      });
     });
   });
 });
