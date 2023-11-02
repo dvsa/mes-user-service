@@ -18,10 +18,10 @@ const createDynamoClient = () => {
   return new DynamoDBClient(opts);
 };
 
-const ddb = createDynamoClient();
-const tableName = getUserTableName();
-
 export async function getUserRecord(staffNumber: string): Promise<UserRecord | null> {
+  const ddb = createDynamoClient();
+  const tableName = getUserTableName();
+
   const response = await ddb.send(
     new GetCommand({
       TableName: tableName,
