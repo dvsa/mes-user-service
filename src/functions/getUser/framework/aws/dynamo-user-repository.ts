@@ -12,6 +12,8 @@ const createDynamoClient = () => {
     opts.credentials = fromIni();
   } else if (process.env.IS_OFFLINE === 'true') {
     warn('Using SLS offline');
+    warn('Offline EP', process.env.DDB_OFFLINE_ENDPOINT);
+    opts.credentials = { accessKeyId: 'accessKeyId', secretAccessKey: 'secretAccessKey' };
     opts.endpoint = process.env.DDB_OFFLINE_ENDPOINT;
   }
 
