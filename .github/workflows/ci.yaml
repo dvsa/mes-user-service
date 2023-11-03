@@ -8,7 +8,7 @@ on:
 
 jobs:
   runs-ci:
-    uses: dvsa/des-workflow-actions/.github/workflows/ci-backend.yaml@main
+    uses: dvsa/des-workflow-actions/.github/workflows/ci-backend.yaml@update-checkout-to-v4
     with:
       dynamodb: true
     secrets:
