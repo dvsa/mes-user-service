@@ -13,6 +13,11 @@ describe('Dynamo repository', () => {
     testPermissionPeriods: [],
   } as UserRecord;
 
+  beforeEach(() => {
+    process.env.IS_OFFLINE = 'false';
+    process.env.USE_CREDENTIALS = 'false';
+  });
+
   describe('getUserRecord', () => {
     ['true', 'false'].forEach((value) => {
       it(`should return item from DynamoDB when found & IS_OFFLINE is ${value}`, async () => {

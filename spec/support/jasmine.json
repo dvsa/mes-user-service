@@ -3,8 +3,5 @@
   "spec_files": [
     "**/__tests__/*[sP]pec.js"
   ],
-  "helpers": [
-    "spec/helpers/*.js"
-  ],
   "stopSpecOnExpectationFailure": true
 }
