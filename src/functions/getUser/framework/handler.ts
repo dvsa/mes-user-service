@@ -8,15 +8,16 @@ import { UserNotFoundError } from '../domain/user-not-found-error';
 import { Metric } from '../../../common/application/metric/metric';
 
 export async function handler(event: APIGatewayProxyEvent) {
-  bootstrapLogging('get-user', event);
-
-  const staffNumber = getPathParam(event.pathParameters, 'staffNumber');
-  if (!staffNumber) {
-    error('No staffNumber provided');
-    return createResponse('No staffNumber provided', HttpStatus.BAD_REQUEST);
-  }
-
   try {
+    bootstrapLogging('get-user', event);
+
+    const staffNumber = getPathParam(event.pathParameters, 'staffNumber');
+
+    if (!staffNumber) {
+      error('No staffNumber provided');
+      return createResponse('No staffNumber provided', HttpStatus.BAD_REQUEST);
+    }
+
     await findUser(staffNumber);
 
     customMetric(Metric.UserFound, 'User found in DynamoDB table using staff number provided');

@@ -23,7 +23,7 @@
     "start": "sls dynamodb install && sls offline start",
     "test": "npm run compile && jasmine",
     "test:jasmine-coverage": "nyc npm run test",
-    "test:int": "npm run compile && jasmine build/spec/journal.spec.js",
+    "test:integration": "npm run start & bash spec/helpers/bootstrap-integration-tests.sh && npm run compile && jasmine build/spec/jasmine build/spec/integration/*.int.js",
     "prepare": "husky install"
   },
   "dependencies": {
