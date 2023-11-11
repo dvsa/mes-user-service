@@ -21,8 +21,8 @@
     "package": "./package.sh",
     "security-scan": "git secrets --scan && git log -p | scanrepo",
     "start": "sls dynamodb install && sls offline start",
-    "test": "jest src",
-    "test:coverage": "jest src --coverage",
+    "test": "jest src --runInBand",
+    "test:coverage": "npm run test -- --coverage",
     "test:integration": "npm run start & bash spec/helpers/bootstrap-integration-tests.sh && npm run compile && jest spec/integration/*.test.ts",
     "prepare": "husky install"
   },
@@ -66,6 +66,7 @@
     "yamljs": "^0.3.0"
   },
   "jest": {
+    "coverageProvider": "v8",
     "roots": [
       "<rootDir>/src",
       "<rootDir>/spec"
