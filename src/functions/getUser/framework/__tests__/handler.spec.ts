@@ -14,7 +14,7 @@ describe('getUser handler', () => {
   beforeEach(() => {
     moqFindUser.reset();
 
-    spyOn(response, 'createResponse').and.callThrough();
+    jest.spyOn(response, 'createResponse');
     dummyApigwEvent = lambdaTestUtils.mockEventCreator.createAPIGatewayEvent({
       pathParameters: {
         staffNumber: '12345678',
@@ -26,7 +26,7 @@ describe('getUser handler', () => {
     });
     dummyApigwEvent.requestContext.authorizer = { staffNumber: '12345678' };
     process.env.EMPLOYEE_ID_VERIFICATION_DISABLED = undefined;
-    spyOn(FindUser, 'findUser').and.callFake(moqFindUser.object);
+    jest.spyOn(FindUser, 'findUser').mockImplementation(moqFindUser.object);
   });
 
   describe('200',  () => {
