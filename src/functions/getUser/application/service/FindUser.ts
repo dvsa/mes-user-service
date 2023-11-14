@@ -1,6 +1,5 @@
 import { getUserRecord } from '../../framework/aws/dynamo-user-repository';
 import { UserNotFoundError } from '../../domain/user-not-found-error';
-import { tracer } from '../../framework/handler';
 
 /**
  * Finds a journal with a specified staffNumber.
