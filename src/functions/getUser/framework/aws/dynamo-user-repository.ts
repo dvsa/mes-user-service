@@ -3,6 +3,7 @@ import { DynamoDBClient, DynamoDBClientConfig } from '@aws-sdk/client-dynamodb';
 import { fromEnv, fromIni } from '@aws-sdk/credential-providers';
 import { warn } from '@dvsa/mes-microservice-common/application/utils/logger';
 import { UserRecord } from '../../domain/UserRecord';
+import { tracer } from '../handler';
 
 const createDynamoClient = () => {
   const opts = { region: 'eu-west-1' } as DynamoDBClientConfig;
@@ -16,7 +17,7 @@ const createDynamoClient = () => {
     opts.endpoint = process.env.DDB_OFFLINE_ENDPOINT;
   }
 
-  return new DynamoDBClient(opts);
+  return tracer.captureAWSv3Client(new DynamoDBClient(opts));
 };
 
 export async function getUserRecord(staffNumber: string): Promise<UserRecord | null> {
