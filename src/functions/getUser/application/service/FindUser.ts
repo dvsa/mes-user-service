@@ -16,6 +16,4 @@ export async function findUser(
   if (!userRecord) {
     throw new UserNotFoundError();
   }
-
-  tracer.putAnnotation('UserFound', true);
 }
