@@ -2,7 +2,7 @@ service: mes-user-service
 
 provider:
   name: aws
-  runtime: nodejs18.x
+  runtime: nodejs20.x
   environment:
     USERS_DDB_TABLE_NAME: users
     DDB_OFFLINE_ENDPOINT: http://localhost:8000
